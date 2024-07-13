@@ -3,6 +3,7 @@ import { Button } from "../../components/button";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../../lib/axios";
+import InviteGuestsModal from "../create-trip/invite-guests-modal";
 
 interface Participant {
   id: string;
@@ -14,12 +15,21 @@ interface Participant {
 export const Guests = () => {
   const { tripId } = useParams();
   const [participants, setParticipants] = useState<Participant[]>([]);
+  const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
 
   useEffect(() => {
     api
       .get(`/trips/${tripId}/participants`)
       .then((res) => setParticipants(res.data));
   }, [tripId]);
+
+  const openGuestsModal = () => {
+    setIsGuestsModalOpen(true);
+  };
+
+  const closeGuestsModal = () => {
+    setIsGuestsModalOpen(false);
+  };
 
   return (
     <div className="space-y-6">
@@ -49,10 +59,19 @@ export const Guests = () => {
         ))}
       </div>
 
-      <Button variant="secondary" size="full">
+      <Button onClick={openGuestsModal} variant="secondary" size="full">
         <UserCog className="size-5" />
         Gerenciar convidados
       </Button>
+
+      {isGuestsModalOpen && (
+        <InviteGuestsModal
+          closeGuestsModal={closeGuestsModal}
+          emailsToInvite={participants.map((participant) => participant.email)}
+          addNewEmailToInvite={() => {}}
+          removeEmailFromInvites={() => {}}
+        />
+      )}
     </div>
   );
 };

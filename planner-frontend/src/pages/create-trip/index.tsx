@@ -24,6 +24,7 @@ export const CreateTripPage = () => {
     DateRange | undefined
   >();
 
+
   const openGuestsInput = () => {
     setIsGuestsInputOpen(true);
   };
@@ -143,6 +144,7 @@ export const CreateTripPage = () => {
           addNewEmailToInvite={addNewEmailToInvite}
           closeGuestsModal={closeGuestsModal}
           removeEmailFromInvites={removeEmailFromInvites}
+          // handleAddNewEmail={addNewEmailToInvite}
         />
       )}
 
@@ -152,6 +154,8 @@ export const CreateTripPage = () => {
           createTrip={createTrip}
           setOwnerName={setOwnerName}
           setOwnerEmail={setOwnerEmail}
+          destination={destination}
+          eventStartAndEndDate={eventStartAndEndDate}
         />
       )}
     </div>
